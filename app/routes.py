@@ -1,14 +1,11 @@
-# from app import app
+from app import app
 from flask import render_template
-from src.models import Doctor
-from src.main import bp
-
+from app.models import Doctor
 import operator
 
-
-@bp.route('/')
-@bp.route('/all_doctors')
-@bp.route('/all_doctors/<attribute>')
+@app.route('/')
+@app.route('/all_doctors')
+@app.route('/all_doctors/<attribute>')
 def index(attribute=None):
     doctors = Doctor.query.all()
     if(attribute == None):
@@ -21,7 +18,7 @@ def index(attribute=None):
         doctors.sort(key=operator.attrgetter(attribute),reverse = reverse)
         return render_template('all_doctors.html',doctors = doctors)
 
-@bp.route('/doctors/<id>')
+@app.route('/doctors/<id>')
 def details(id):
     selected_doctor = Doctor.query.get(id)
     # doctors are selected based on specialty on being located in the same city

@@ -1,4 +1,4 @@
-from src import db
+from app import db
 from sqlalchemy.sql import func
 
 class Doctor(db.Model):
@@ -14,7 +14,7 @@ class Doctor(db.Model):
     # similar doctors have same specialty and work in same city
     def get_similar_doctors(self):
         o = Office.query.get(self.office_id)
-        d = Doctor.query.join(Doctor.office).filter_by(city = o.city, state = o.state).filter(Doctor.id != self.id).all()
+        d = Doctor.query.join(Doctor.office).filter_by(city = o.city, state = o.state).filter(Doctor.id != self.id,Doctor.specialty == self.specialty).all()
         return d
 
     def __repr__(self):

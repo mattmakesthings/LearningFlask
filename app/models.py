@@ -1,32 +1,39 @@
-from datetime import datetime
-from app import db, login
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
-class User(UserMixin,db.Model):
+from app import db
+from sqlalchemy.sql import func
+
+class Doctor(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(64), index = True, unique = True)
-    email = db.Column(db.String(120), index = True, unique = True)
-    password_hash = db.Column(db.String(128))
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
+    first_name = db.Column(db.String(64),index = True, unique = False)
+    last_name = db.Column(db.String(64),index = True, unique = False)
+    specialty = db.Column(db.String(64),index = True, unique = False)
+    rating = db.Column(db.Float,index=True)
+    office_id = db.Column(db.Integer,db.ForeignKey('office.id'))
+    office = db.relationship('Office')
+    
+
+    # similar doctors have same specialty and work in same city
+    def get_similar_doctors(self):
+        o = Office.query.get(self.office_id)
+        d = Doctor.query.join(Doctor.office).filter_by(city = o.city, state = o.state).filter(Doctor.id != self.id).all()
+        return d
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return '\nDoctor id: {}\n\tfirst_name: {}\n\tlast_name: {}\n\tspecialty: {}\n\toffice: {}'.format(self.id,
+                                                                                       self.first_name,
+                                                                                       self.last_name,
+                                                                                       self.specialty,
+                                                                                       self.office)
 
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+# class Review(db.Model):
+#     id = db.Column(db.Integer,primary_key = True)
+#     doctor_id = db.Column(db.Integer,db.ForeignKey("doctor.id"))
+#     rating = db.Column(db.Integer)
 
-    def check_password(self, password):
-        return check_password_hash(self.password_hash,password)
-
-class Post(db.Model):
+class Office(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index = True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
+    address = db.Column(db.String(64),index = True, unique = False)
+    city = db.Column(db.String(64),index = True, unique = False)
+    state = db.Column(db.String(64),index = True, unique = False)
 
     def __repr__(self):
-        return '<Post {}>'.format(self.body)
-
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+        return '\nOffice id: {}\n\taddress: {}\n\tcity: {}\n\tstate: {}'.format(self.id,self.address,self.city,self.state)

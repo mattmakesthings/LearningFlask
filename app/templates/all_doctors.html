@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Welcome to my Allscripts Application</title>
+    </head>
+    <body>
+    <div>
+     <h2>Matthew Weidman Allscripts Application</h2>
+     <a href="/all_doctors">Home</a></div>
+    <hr>
+    {% block content %}{% endblock %}
+    {% if doctors %}
+    <table stlye = "width:100%">
+        <tr>
+            <th><a href="/all_doctors/id">ID</th>
+            <th><a href="/all_doctors/first_name">firstname</th>
+            <th><a href="/all_doctors/last_name">lastname</th>
+            <th><a href="/all_doctors/rating">rating</th>
+            <th><a href="/all_doctors/specialty">specialty</th>
+            <th><a href="/all_doctors/office.city">city</th>
+        {% for doc in doctors %}
+        <tr>
+            <td><a href="/doctors/{{ doc.id}}">{{doc.id}}</td>
+            <td>{{ doc.first_name}}</td>
+            <td>{{ doc.last_name}}</td>
+            <td>{{ doc.rating}} </td>
+            <td>{{ doc.specialty}}</td>
+            <td>{{ doc.office.city}}</td>
+        </tr>
+        {% endfor %}
+    {% else %}
+    {% endif %}
+    </table>
+    </body>
+</html>

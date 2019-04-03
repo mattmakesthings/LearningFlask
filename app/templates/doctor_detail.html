@@ -1,0 +1,17 @@
+{% extends "all_doctors.html" %}
+
+{% block content %}
+    <h2>{{selected.first_name}} {{selected.last_name}}</h3>
+    <h3>rating: {{selected.rating}} / 5.0</h2>
+    <body>
+
+        <p>specialty: {{selected.specialty}}
+        <br>location: {{selected.office.address}},
+                  {{selected.office.city}},
+                  {{selected.office.state}}
+    </body>
+    {% if doctors %}
+    <br><h3> similar doctors </h3>
+    {% endif %}
+{% endblock %}
+

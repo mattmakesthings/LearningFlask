@@ -17,12 +17,6 @@ def create_app(config_class=Config):
     return app
 
 app = create_app()
-with app.app_context():
-    db.init_app(app)
-    migrate.init_app(app, db)
-
-
-
-
+app.app_context().push()
 
 from app import routes, models

@@ -1,5 +1,5 @@
-from src import db
-from src.models import Doctor, Office
+from app import db
+from app.models import Doctor, Office
 
 offices = Office.query.all()
 

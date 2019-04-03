@@ -28,7 +28,6 @@ MarkupSafe==1.1.1
 openapi-spec-validator==0.2.6
 pathlib==1.0.1
 pycrypto==2.6.1
-pygobject==3.26.1
 python-dateutil==2.8.0
 python-dotenv==0.10.1
 python-editor==1.0.4

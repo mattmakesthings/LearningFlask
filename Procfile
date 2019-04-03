@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn similarDoctors
+web: flask db upgrade; gunicorn 'similarDoctors:create_app()'

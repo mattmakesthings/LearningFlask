@@ -1,0 +1,2 @@
+web: flask db upgrade; gunicorn 'similarDoctors:create_app()'
+log: tail -f log/development.log

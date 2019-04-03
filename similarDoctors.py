@@ -1,3 +1,3 @@
-from app import create_app, db
+from src import create_app
 
-app = create_app()
+create_app()

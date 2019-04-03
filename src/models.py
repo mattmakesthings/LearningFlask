@@ -1,4 +1,4 @@
-from app import db
+from src import db
 from sqlalchemy.sql import func
 
 class Doctor(db.Model):

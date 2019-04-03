@@ -20,5 +20,6 @@ def create_app(config_class=Config):
 
     return app
 
-from app import routes, models
+from src.main import routes
+from src import models
 

@@ -1,7 +1,7 @@
 # from app import app
 from flask import render_template
-from app.models import Doctor
-from app.main import bp
+from src.models import Doctor
+from src.main import bp
 
 import operator
 

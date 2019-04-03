@@ -8,12 +8,16 @@ from flask_migrate import Migrate
 # logging.basicConfig()
 # logger = logging.getLogger('root')
 
+db = SQLAlchemy()
+migrate = Migrate()
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
-    db = SQLAlchemy(app)
-    migrate = Migrate(app, db)
 
+    db.init_app(app)
+    migrate.init_app(app, db)
+
+    return app
 
 from app import routes, models
 
